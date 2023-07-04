@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="stylefile.css">
+  
+  <style>
+    body {
+      text-align: center;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      margin: auto;
+    }
+
+    input {
+      padding: 0.6rem;
+    }
+
+    .btn {
+      padding: 0.5rem 0.8rem;
+      background-color: violet;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+    }
+
+    .otpverify {
+      display: none;
+    }
+  </style>
+  
+  <title>Hello, World!</title>
+  
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+</head>
+<body>
+  <h1 style="color: #d72638;">Sign<span style="color: #3a244a;">in</span></h1>
+  <div class="form">
+    <input type="email" id="email" placeholder="Enter Email...">
+
+    <div class="otpverify">
+      <input type="text" id="otp_inp" placeholder="Enter the OTP sent to your Email...">
+      <button class="btn" id="otp-btn">Verify</button>
+    </div>
+
+    <button onclick="sendOTP()" class="btn">Send OTP</button>
+  </div>
+
+  <script>
+    function sendOTP() {
+      const email = document.getElementById('email');
+      const otpverify = document.getElementsByClassName('otpverify')[0];
+
+      let otp_val = Math.floor(Math.random() * 10000);
+
+      let emailbody = `
+        <h1>Email verification otp.</h1> <br>
+        <h2>Your OTP is </h2>${otp_val}
+      `;
+
+      Email.send({
+        SecureToken: 'db282dad-a01d-4e00-b77e-7e264917b9bb',
+        To: email.value,
+        From: 'f20202349@hyderabad.bits-pilani.ac.in',
+        Subject: 'This is otp',
+        Body: emailbody,
+      }).then(message => {
+        if (message === 'OK') {
+          alert('OTP sent to your email ' + email.value);
+
+          otpverify.style.display = 'block';
+          const otp_inp = document.getElementById('otp_inp');
+          const otp_btn = document.getElementById('otp-btn');
+
+          otp_btn.addEventListener('click', () => {
+            if (otp_inp.value == otp_val) {
+              alert('Email address verified...');
+            } else {
+              alert('Invalid OTP');
+            }
+          });
+        }
+      });
+    }
+  </script>
+
+  <img src="./myimg.png" alt="not came" />
+  
+  <a class="sinuppos" href="./singuppg.html">singup</a>
+  <a class="sininpos" href="./singinpg.html">singin</a>
+  
+  <script src="./utube.js"></script>
+</body>
+</html>
